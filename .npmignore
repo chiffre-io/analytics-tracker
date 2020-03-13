@@ -5,3 +5,8 @@ tsconfig.json
 yarn-error.log
 .github/**
 src/**
+.cache/
+dist/
+lib/main.*
+.dependabot/
+scripts/
