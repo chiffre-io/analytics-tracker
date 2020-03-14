@@ -31,7 +31,7 @@
     "ci": "run-s build"
   },
   "dependencies": {
-    "@chiffre/analytics-core": "^1.0.0",
+    "@chiffre/analytics-core": "^1.0.1",
     "@chiffre/crypto-box": "^1.0.1"
   },
   "devDependencies": {

@@ -80,7 +80,7 @@ export function setup() {
   if (navigator.doNotTrack === '1') {
     // With DoNotTrack, we send a single event for page views, without
     // any session tracking or other visitor information.
-    sendEvent(createBrowserEvent('session:dnt'), config)
+    sendEvent(createBrowserEvent('session:dnt', undefined), config)
   } else {
     setupSessionListeners(event => sendEvent(event, config))
     setupPageVisitListeners(event => sendEvent(event, config))
