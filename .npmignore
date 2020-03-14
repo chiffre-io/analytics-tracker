@@ -10,3 +10,4 @@ dist/
 lib/main.*
 .dependabot/
 scripts/
+coverage/
