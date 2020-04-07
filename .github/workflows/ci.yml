@@ -36,6 +36,9 @@ jobs:
       #   name: Report code coverage
       #   with:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo $GITHUB_RUN_ID
+      - run: echo $GITHUB_RUN_NUMBER
+      - run: echo $GITHUB_ACTION
       - uses: 8398a7/action-slack@78391c2
         name: Notify on Slack
         if: always() # Pick up events even if the job fails or is canceled.
