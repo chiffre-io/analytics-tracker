@@ -52,6 +52,14 @@
     "crypto": false,
     "buffer": false
   },
+  "prettier": {
+    "arrowParens": "avoid",
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
   "jest": {
     "verbose": true,
     "preset": "ts-jest/presets/js-with-ts",
