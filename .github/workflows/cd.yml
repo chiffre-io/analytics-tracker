@@ -46,6 +46,8 @@ jobs:
       - run: yarn sign
         if: steps.semantic.outputs.new-release-published == 'true'
         name: Sign bundle
+        env:
+          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
       - uses: dswistowski/surge-sh-action@341bcbd
         name: Deploy to Surge
         if: steps.semantic.outputs.new-release-published == 'true'
