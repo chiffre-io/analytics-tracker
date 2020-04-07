@@ -29,6 +29,8 @@
     "build:bundle": "parcel build ./src/main.ts --out-file analytics.js --detailed-report 20 --experimental-scope-hoisting",
     "build:cors": "echo '*' > ./dist/CORS",
     "build": "run-s build:clean build:ts build:bundle build:cors",
+    "gen:version": "ts-node ./scripts/generateVersion.ts",
+    "sign": "ts-node ./scripts/sign.ts",
     "ci": "run-s build"
   },
   "dependencies": {
@@ -36,6 +38,7 @@
     "@chiffre/crypto-box": "^1.0.1"
   },
   "devDependencies": {
+    "@chiffre/crypto-sign": "^1.0.0",
     "@commitlint/config-conventional": "^8.3.4",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.1",
