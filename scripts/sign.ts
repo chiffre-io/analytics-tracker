@@ -46,7 +46,7 @@ export function run() {
   const meta: Metadata = {
     version: process.env.RELEASE_VERSION || '0.0.0',
     gitSha1: process.env.GITHUB_SHA || 'local',
-    buildUrl: `https://github.com/chiffre-io/analytics-tracker/runs/${process.env.GITHUB_RUN_ID}`
+    buildUrl: `https://github.com/chiffre-io/analytics-tracker/actions/runs/${process.env.GITHUB_RUN_ID}`
   }
   const secretKey = process.env.SIGNATURE_SECRET_KEY
   if (!secretKey) {
