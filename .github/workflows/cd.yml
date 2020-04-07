@@ -37,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: yarn gen:version
+      - run: ts-node ./scripts/generateVersion.ts
         if: steps.semantic.outputs.new-release-published == 'true'
         name: Generate version file
       - run: yarn build
