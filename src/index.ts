@@ -7,6 +7,7 @@ import {
   createBrowserEvent
 } from '@chiffre/analytics-core'
 import { Config } from './types'
+import { version } from './version'
 
 export function readConfig(): Config | null {
   try {
@@ -34,14 +35,14 @@ export function sendEvent(event: Event<any, any>, config: Config) {
   const json = JSON.stringify(event)
   const payload = encryptString(json, config.publicKey)
   const tock = performance.now()
-  const perf = Math.round(tock - tick)
-  const url = `${config.pushURL}?perf=${perf}`
+  const perf = Math.round(tock - tick).toFixed()
+  const urlWithPerf = `${config.pushURL}?perf=${perf}`
   if (window.localStorage.getItem('chiffre:debug') === 'true') {
     console.dir({
       event,
       payload,
       perf,
-      url
+      urlWithPerf
     })
   }
   if (window.localStorage.getItem('chiffre:no-send') === 'true') {
@@ -52,17 +53,32 @@ export function sendEvent(event: Event<any, any>, config: Config) {
     return false
   }
 
-  // Try sendBeacon first, if available
+  if ('fetch' in window) {
+    fetch(config.pushURL, {
+      method: 'POST',
+      body: payload,
+      credentials: 'omit',
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'text/plain',
+        'X-Chiffre-Perf': perf,
+        'X-Chiffre-Version': version,
+        'X-Chiffre-XHR': 'fetch'
+      }
+    })
+    return true
+  }
+
   if (
     typeof navigator.sendBeacon === 'function' &&
-    navigator.sendBeacon(url, payload)
+    navigator.sendBeacon(urlWithPerf, payload)
   ) {
     return true
   }
 
   // Fallback to img GET
   const img = new Image()
-  img.src = `${url}&payload=${payload}`
+  img.src = `${urlWithPerf}&payload=${payload}`
   return true
 }
 
