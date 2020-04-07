@@ -37,6 +37,8 @@ jobs:
       #   with:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn sign && cat ./dist/analytics.js
+        env:
+          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
       - uses: 8398a7/action-slack@78391c2
         name: Notify on Slack
         if: always() # Pick up events even if the job fails or is canceled.
