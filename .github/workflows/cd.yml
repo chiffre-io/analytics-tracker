@@ -26,8 +26,6 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install --ignore-scripts
         name: Install dependencies
-      - run: yarn build
-        name: Build bundle
 
       # Continuous Delivery Pipeline --
 
@@ -37,16 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: ./node_modules/.bin/ts-node ./scripts/generateVersion.ts
-        if: steps.semantic.outputs.new-release-published == 'true'
-        name: Generate version file
-      - run: yarn build
-        if: steps.semantic.outputs.new-release-published == 'true'
-        name: Re-build bundle with version info
-      - run: yarn sign
-        if: steps.semantic.outputs.new-release-published == 'true'
-        name: Sign bundle
-        env:
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
       - uses: dswistowski/surge-sh-action@341bcbd
         name: Deploy to Surge

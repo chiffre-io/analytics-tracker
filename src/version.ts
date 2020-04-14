@@ -1,1 +1,1 @@
-export const version = '0.0.0-local'
+export const version = '0.0.0-semantically-released-local'

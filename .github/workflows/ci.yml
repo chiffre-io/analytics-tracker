@@ -32,6 +32,8 @@ jobs:
         name: Install dependencies
       - run: yarn ci
         name: Run integration tests
+        env:
+          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
       # - uses: coverallsapp/github-action@832e70b
       #   name: Report code coverage
       #   with:

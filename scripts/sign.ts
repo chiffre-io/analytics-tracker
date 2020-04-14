@@ -4,11 +4,15 @@ import crypto from 'crypto'
 import { b64, utf8 } from '@47ng/codec'
 import { parseSecretKey, signUtf8String } from '@chiffre/crypto-sign'
 
+function sha256(text: string | Buffer) {
+  const hash = crypto.createHash('sha256')
+  hash.update(text)
+  return `sha256:${b64.encode(hash.digest())}`
+}
+
 function hashFile(filePath: string) {
   const contents = fs.readFileSync(filePath)
-  const hash = crypto.createHash('sha256')
-  hash.update(contents)
-  return `sha256:${b64.encode(hash.digest())}`
+  return sha256(contents)
 }
 
 export interface Metadata {
@@ -33,7 +37,8 @@ export function generateHeader(
     fileHash: hash
   }
   const json = JSON.stringify(header)
-  const signature = signUtf8String(json, sk)
+  const jsonHash = sha256(json)
+  const signature = signUtf8String(jsonHash, sk)
   return `/*chiffre:sig ${signature}*/\n/*chiffre:header ${json}*/\n`
 }
 
@@ -44,7 +49,7 @@ export function run() {
     return // Already signed
   }
   const meta: Metadata = {
-    version: process.env.RELEASE_VERSION || '0.0.0',
+    version: process.env.npm_package_version || '0.0.0-local',
     gitSha1: process.env.GITHUB_SHA || 'local',
     buildUrl: `https://github.com/chiffre-io/analytics-tracker/actions/runs/${process.env.GITHUB_RUN_ID}`
   }
