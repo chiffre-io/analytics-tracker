@@ -32,7 +32,7 @@
     "build:sign": "ts-node ./scripts/sign.ts",
     "build": "run-s build:clean build:version build:ts build:bundle build:sign build:cors",
     "ci": "run-s build",
-    "postversion": "run-s build"
+    "version": "run-s build"
   },
   "dependencies": {
     "@chiffre/analytics-core": "^1.0.1",
