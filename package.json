@@ -1,6 +1,6 @@
 {
   "name": "@chiffre/analytics-tracker",
-  "version": "0.0.0-semantically-released",
+  "version": "1.1.6",
   "description": "Tracker script for Chiffre Analytics",
   "main": "lib/index.js",
   "types": "lib/types.d.ts",
@@ -30,7 +30,8 @@
     "build:bundle": "parcel build ./src/main.ts --out-file analytics.js --detailed-report 20 --experimental-scope-hoisting",
     "build:cors": "echo '*' > ./dist/CORS",
     "build:sign": "ts-node ./scripts/sign.ts",
-    "build": "run-s build:clean build:version build:ts build:bundle build:sign build:cors",
+    "build:gzipped": "echo $(cat ./dist/analytics.js | gzip -kc7 | wc -c) bytes gzipped",
+    "build": "run-s build:clean build:version build:ts build:bundle build:sign build:cors build:gzipped",
     "ci": "run-s build",
     "version": "run-s build"
   },

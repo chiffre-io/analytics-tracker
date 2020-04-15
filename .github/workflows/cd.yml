@@ -26,20 +26,19 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install --ignore-scripts
         name: Install dependencies
+      - run: yarn build
+        name: Build bundle
 
       # Continuous Delivery Pipeline --
 
-      - uses: 47ng/semantic-release-action@master
-        name: Semantic Release
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
-      - run: pwd ; ls -la . dist/ lib/ ; head -n 4 package.json ; head ./lib/version.js ; head -n 2 ./dist/analytics.js
+      # - uses: 47ng/semantic-release-action@master
+      #   name: Semantic Release
+      #   id: semantic
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: dswistowski/surge-sh-action@341bcbd
         name: Deploy to Surge
-        if: steps.semantic.outputs.new-release-published == 'true'
         with:
           domain: https://staging-embed.chiffre.io
           project: ./dist

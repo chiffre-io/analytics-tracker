@@ -31,7 +31,7 @@ export function readConfig(): Config | null {
 }
 
 function makeUrl(config: Config, perf: number, xhr: string) {
-  const query = [`v=${version}`, `perf=${perf.toFixed()}`, `xhr=${xhr}`].join(
+  const query = ['v=' + version, 'perf=' + perf.toFixed(), 'xhr=' + xhr].join(
     '&'
   )
   return `${config.pushURL}?${query}`
@@ -52,7 +52,7 @@ export function sendEvent(event: Event<any, any>, config: Config) {
     })
   }
   if (window.localStorage.getItem('chiffre:no-send') === 'true') {
-    console.info('[Chiffre] Skip sending message (chiffre:no-send is set)', {
+    console.info('[Chiffre] Not sending message', {
       payload,
       perf
     })

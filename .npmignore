@@ -11,6 +11,3 @@ lib/main.*
 .dependabot/
 scripts/
 coverage/
-
-# Generated at build time
-./src/version.ts

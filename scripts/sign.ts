@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import { b64, utf8 } from '@47ng/codec'
-import { parseSecretKey, signUtf8String } from '@chiffre/crypto-sign'
+import { signUtf8String, importKeys } from '@chiffre/crypto-sign'
 
 function sha256(text: string | Buffer) {
   const hash = crypto.createHash('sha256')
@@ -30,7 +30,7 @@ export function generateHeader(
   secretKey: string,
   filePath: string
 ) {
-  const sk = parseSecretKey(secretKey)
+  const keys = importKeys(secretKey)
   const hash = hashFile(filePath)
   const header: Header = {
     ...meta,
@@ -38,7 +38,13 @@ export function generateHeader(
   }
   const json = JSON.stringify(header)
   const jsonHash = sha256(json)
-  const signature = signUtf8String(jsonHash, sk)
+  const signature = signUtf8String(jsonHash, keys.raw.secretKey)
+  console.log('Header contents:')
+  console.dir(header)
+  console.log(`Header JSON: ${json}`)
+  console.log(`Header hash: ${jsonHash}`)
+  console.log(`Signature:   ${signature}`)
+  console.log(`Public key:  ${keys.public}`)
   return `/*chiffre:sig ${signature}*/\n/*chiffre:header ${json}*/\n`
 }
 
@@ -49,7 +55,7 @@ export function run() {
     return // Already signed
   }
   const meta: Metadata = {
-    version: process.env.npm_package_version || '0.0.0-local',
+    version: process.env.npm_package_version || '0.0.0',
     gitSha1: process.env.GITHUB_SHA || 'local',
     buildUrl: `https://github.com/chiffre-io/analytics-tracker/actions/runs/${process.env.GITHUB_RUN_ID}`
   }
