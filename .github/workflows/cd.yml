@@ -36,7 +36,7 @@ jobs:
       - uses: dswistowski/surge-sh-action@341bcbd
         name: Deploy to Surge
         with:
-          domain: https://staging-embed.chiffre.io
+          domain: https://embed.chiffre.io
           project: ./dist
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
