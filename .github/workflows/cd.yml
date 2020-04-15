@@ -36,11 +36,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
+      - run: ls -la . dist/ lib/ && cat package.json && cat ./lib/version.js && head -n 2 ./dist/analytics.js
       - uses: dswistowski/surge-sh-action@341bcbd
         name: Deploy to Surge
         if: steps.semantic.outputs.new-release-published == 'true'
         with:
-          domain: https://embed.chiffre.io
+          domain: https://staging-embed.chiffre.io
           project: ./dist
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
