@@ -29,7 +29,7 @@ jobs:
 
       # Continuous Delivery Pipeline --
 
-      - uses: 47ng/semantic-release-action@7ca13254
+      - uses: 47ng/semantic-release-action@master
         name: Semantic Release
         id: semantic
         env:
