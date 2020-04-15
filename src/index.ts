@@ -30,19 +30,25 @@ export function readConfig(): Config | null {
   }
 }
 
+function makeUrl(config: Config, perf: number, xhr: string) {
+  const query = [`v=${version}`, `perf=${perf.toFixed()}`, `xhr=${xhr}`].join(
+    '&'
+  )
+  return `${config.pushURL}?${query}`
+}
+
 export function sendEvent(event: Event<any, any>, config: Config) {
   const tick = performance.now()
   const json = JSON.stringify(event)
   const payload = encryptString(json, config.publicKey)
   const tock = performance.now()
-  const perf = Math.round(tock - tick).toFixed()
-  const urlWithPerf = `${config.pushURL}?perf=${perf}`
+  const perf = Math.round(tock - tick)
   if (window.localStorage.getItem('chiffre:debug') === 'true') {
     console.dir({
       event,
       payload,
       perf,
-      urlWithPerf
+      version
     })
   }
   if (window.localStorage.getItem('chiffre:no-send') === 'true') {
@@ -54,31 +60,32 @@ export function sendEvent(event: Event<any, any>, config: Config) {
   }
 
   if ('fetch' in window) {
-    fetch(config.pushURL, {
+    const url = makeUrl(config, perf, 'fetch')
+    fetch(url, {
       method: 'POST',
       body: payload,
       credentials: 'omit',
       cache: 'no-store',
+      mode: 'no-cors',
       headers: {
-        'Content-Type': 'text/plain',
-        'X-Chiffre-Perf': perf,
-        'X-Chiffre-Version': version,
-        'X-Chiffre-XHR': 'fetch'
+        'Content-Type': 'text/plain'
       }
     })
     return true
   }
 
+  const beaconUrl = makeUrl(config, perf, 'beacon')
   if (
     typeof navigator.sendBeacon === 'function' &&
-    navigator.sendBeacon(urlWithPerf, payload)
+    navigator.sendBeacon(beaconUrl, payload)
   ) {
     return true
   }
 
   // Fallback to img GET
+  const imgUrl = makeUrl(config, perf, 'img')
   const img = new Image()
-  img.src = `${urlWithPerf}&payload=${payload}`
+  img.src = `${imgUrl}&payload=${payload}`
   return true
 }
 
