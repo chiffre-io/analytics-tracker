@@ -32,8 +32,7 @@
     "build:sign": "ts-node ./scripts/sign.ts",
     "build:gzipped": "echo $(cat ./dist/analytics.js | gzip -kc7 | wc -c) bytes gzipped",
     "build": "run-s build:clean build:version build:ts build:bundle build:sign build:cors build:gzipped",
-    "ci": "run-s build",
-    "version": "run-s build"
+    "ci": "run-s build"
   },
   "dependencies": {
     "@chiffre/analytics-core": "^1.1.0",
