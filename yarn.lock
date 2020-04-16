@@ -797,7 +797,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@chiffre/analytics-core@^1.0.1":
+"@chiffre/analytics-core@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@chiffre/analytics-core/-/analytics-core-1.1.0.tgz#f38c3ad3e984d88f93d74f53b94dfe625bb9b629"
   integrity sha512-Tt/EbxLRqu3SLw5QixKWQm9oF8x+NL0AYHkLNefTv2cIU5CCbhFoGNGx4B3PgsXChTbzBuSZca03ljvESD6l/A==
