@@ -31,7 +31,7 @@ export function readConfig(): Config | null {
 }
 
 function makeUrl(config: Config, perf: number, xhr: string) {
-  const query = ['v=' + version, 'perf=' + perf.toFixed(), 'xhr=' + xhr].join(
+  const query = ['v=' + version, 'xhr=' + xhr, 'perf=' + perf.toFixed()].join(
     '&'
   )
   return `${config.pushURL}?${query}`
