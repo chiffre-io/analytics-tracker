@@ -811,10 +811,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@chiffre/analytics-core@^1.1.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@chiffre/analytics-core/-/analytics-core-1.2.0.tgz#9d59ceacd1cc5437de39457d14b91c9f99f18480"
-  integrity sha512-DBDA6KVm8lmJQfRqnXNfawbJpALoBRheIO7iOybpUzU62kmlNsENNmUXOF/buIPkZL/Kymh9JoBKtrsSeCCbZw==
+"@chiffre/analytics-core@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@chiffre/analytics-core/-/analytics-core-2.0.0.tgz#5304079a069d5eeae9e21ed0e0a7ad6132291d0b"
+  integrity sha512-QKAKI+O305xc3FdqOXZahRPb4LbA4Hx7iN6WhjxvXKi67MrpaFjJWlF9gfeRTYsHxYBwGWfvT8iHUzjR4XW6nw==
   dependencies:
     nanoid "^3.0.2"
 
