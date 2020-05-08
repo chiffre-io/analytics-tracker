@@ -43,6 +43,13 @@ export function sendEvent(
   preferSendBeacon = false
 ) {
   const tick = performance.now()
+  if (Array.isArray(config.ignorePaths)) {
+    for (const path of config.ignorePaths) {
+      if (window.location.pathname.startsWith(path)) {
+        return // Do not send event
+      }
+    }
+  }
   const json = JSON.stringify(event)
   const payload = encryptString(json, config.publicKey)
   const tock = performance.now()

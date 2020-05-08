@@ -3,6 +3,7 @@ import { GenericDataPoint } from '@chiffre/analytics-core'
 export interface Config {
   publicKey: Uint8Array
   pushURL: string
+  ignorePaths?: string[]
 }
 
 declare global {
