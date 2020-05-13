@@ -43,6 +43,10 @@ export function sendEvent(
   preferSendBeacon = false
 ) {
   const tick = performance.now()
+  if (window.location.hostname.match(/^(localhost|127\.0\.0\.1)$/)) {
+    // Don't send events from localhost
+    return
+  }
   if (Array.isArray(config.ignorePaths)) {
     for (const path of config.ignorePaths) {
       if (window.location.pathname.startsWith(path)) {
