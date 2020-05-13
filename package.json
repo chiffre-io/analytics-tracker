@@ -1,6 +1,6 @@
 {
   "name": "@chiffre/analytics-tracker",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Tracker script for Chiffre Analytics",
   "main": "lib/index.js",
   "types": "lib/types.d.ts",
