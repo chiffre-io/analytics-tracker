@@ -45,7 +45,7 @@ export function sendEvent(
   const tick = performance.now()
   if (
     window.location.hostname.match(/^(localhost|127\.0\.0\.1)$/) &&
-    window.localStorage?.getItem('chiffre:debug') !== 'true'
+    window.localStorage?.getItem('chiffre:allowLocalhost') !== 'true'
   ) {
     // Don't send events from localhost
     return
