@@ -11,7 +11,7 @@ const options: BuildOptions = {
   logLevel: 'info',
   metafile: path.resolve(__dirname, '../dist/build.json'),
   define: {
-    'process.env.NODE_ENV': process.env.NODE_ENV || 'production'
+    'process.env.NODE_ENV': '"production"'
   }
 }
 
