@@ -27,12 +27,12 @@
     "build:clean": "rm -rf ./dist ./lib ./coverage",
     "build:version": "ts-node ./scripts/generateVersion.ts",
     "build:ts": "tsc",
-    "build:esbuild": "esbuild --bundle --minify --external:crypto --log-level=info --format=iife --metafile=./dist/build.json --outfile=./dist/analytics.js ./src/main.ts",
-    "build:cors": "echo '*' > ./dist/CORS",
+    "build:esbuild": "ts-node ./scripts/build.ts",
+    "build:public": "cp -rf ./public/ ./dist/",
     "build:sign": "ts-node ./scripts/sign.ts",
     "build:size": "echo $(cat ./dist/analytics.js | wc -c) bytes unzipped && echo $(cat ./dist/analytics.js | gzip -kc7 | wc -c) bytes gzipped",
     "build:analyze": "ts-node ./scripts/analyze.ts",
-    "build": "run-s build:clean build:version build:ts build:esbuild build:analyze build:sign build:cors build:size",
+    "build": "run-s build:clean build:version build:ts build:esbuild build:analyze build:sign build:public build:size",
     "ci": "run-s build"
   },
   "dependencies": {
