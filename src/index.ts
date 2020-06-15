@@ -43,7 +43,10 @@ export function sendEvent(
   preferSendBeacon = false
 ) {
   const tick = performance.now()
-  if (window.location.hostname.match(/^(localhost|127\.0\.0\.1)$/)) {
+  if (
+    window.location.hostname.match(/^(localhost|127\.0\.0\.1)$/) &&
+    window.localStorage?.getItem('chiffre:debug') !== 'true'
+  ) {
     // Don't send events from localhost
     return
   }
@@ -58,7 +61,7 @@ export function sendEvent(
   const payload = encryptString(json, config.publicKey)
   const tock = performance.now()
   const perf = Math.round(tock - tick)
-  if (window.localStorage.getItem('chiffre:debug') === 'true') {
+  if (window.localStorage?.getItem('chiffre:debug') === 'true') {
     console.dir({
       event,
       payload,
@@ -66,7 +69,7 @@ export function sendEvent(
       version
     })
   }
-  if (window.localStorage.getItem('chiffre:no-send') === 'true') {
+  if (window.localStorage?.getItem('chiffre:no-send') === 'true') {
     console.info('[Chiffre] Not sending message', {
       payload,
       perf
