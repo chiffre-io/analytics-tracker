@@ -2316,10 +2316,10 @@ es6-promisify@^5.0.0:
   dependencies:
     es6-promise "^4.0.3"
 
-esbuild@^0.5.3:
-  version "0.5.26"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.5.26.tgz#0868e8f3e0938c6cb9a8c93e74f85900eff1a071"
-  integrity sha512-OopLmIbQNOWBWMBoOtHjDEaIiTI2okEpRkbiKccfatnXJtsGazwWhR0dmvY8ynjLx/BOPS9mQ6QFl7J1BQCcaQ==
+esbuild@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.6.0.tgz#acb0c9bb804c3824de1651849923f21e7acc8386"
+  integrity sha512-Qe2+EZmBW03h5j+kZK3NM1neR2VsK+QMJHAQQ1ncIPPC8V34o4tV56+TZhfAIFLgtJVI02CgsOHKXSbo1QmTxQ==
 
 escape-string-regexp@^1.0.5:
   version "1.0.5"
