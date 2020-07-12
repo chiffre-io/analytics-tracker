@@ -2317,9 +2317,9 @@ es6-promisify@^5.0.0:
     es6-promise "^4.0.3"
 
 esbuild@^0.6.0:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.6.1.tgz#7cfddebae635334eb24022045492db43ceea9ba3"
-  integrity sha512-nhXBXVvdw7DUHED57lP5S+kzi2SrNMga0b8lGCOJZPI1fFkAiUtWMurrjcnp+HizALb0v8rrJNP2wh8ipUGjZQ==
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.6.2.tgz#8151be0d8783a778f85148cef46ecdf6aad08260"
+  integrity sha512-l4p1jJwLuRr+UMgCkdgQrSaU1fSmjRgZgx1ELjV+doGS3rLtzdCR17IfLxWEdGbtpYdrvvvRVlWYsYnFCcNaLw==
 
 escape-string-regexp@^1.0.5:
   version "1.0.5"
