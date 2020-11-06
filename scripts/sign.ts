@@ -3,14 +3,15 @@ import path from 'path'
 import crypto from 'crypto'
 import { b64, utf8 } from '@47ng/codec'
 import { signUtf8String, importKeys } from '@chiffre/crypto-sign'
+import { getLatestTag } from './generateVersion'
 
-function sha256(text: string | Buffer) {
+export function sha256(text: string | Buffer) {
   const hash = crypto.createHash('sha256')
   hash.update(text)
   return `sha256:${b64.encode(hash.digest())}`
 }
 
-function hashFile(filePath: string) {
+export function hashFile(filePath: string) {
   const contents = fs.readFileSync(filePath)
   return sha256(contents)
 }
@@ -23,6 +24,7 @@ export interface Metadata {
 
 export interface Header extends Metadata {
   fileHash: string
+  spk: string
 }
 
 export function generateHeader(
@@ -34,7 +36,8 @@ export function generateHeader(
   const hash = hashFile(filePath)
   const header: Header = {
     ...meta,
-    fileHash: hash
+    fileHash: hash,
+    spk: keys.public.slice(4, 12)
   }
   const json = JSON.stringify(header)
   const jsonHash = sha256(json)
@@ -48,16 +51,18 @@ export function generateHeader(
   return `/*chiffre:sig ${signature}*/\n/*chiffre:header ${json}*/\n`
 }
 
-export function run() {
+export async function run() {
   const filePath = path.resolve(__dirname, '../dist/analytics.js')
   const contents = utf8.decode(fs.readFileSync(filePath))
   if (contents.startsWith('/*chiffre:sig ')) {
     return // Already signed
   }
   const meta: Metadata = {
-    version: process.env.npm_package_version || '0.0.0',
+    version: await getLatestTag(),
     gitSha1: process.env.GITHUB_SHA || 'local',
-    buildUrl: `https://github.com/chiffre-io/analytics-tracker/actions/runs/${process.env.GITHUB_RUN_ID}`
+    buildUrl: process.env.GITHUB_RUN_ID
+      ? `https://github.com/chiffre-io/analytics-tracker/actions/runs/${process.env.GITHUB_RUN_ID}`
+      : 'local'
   }
   const secretKey = process.env.SIGNATURE_SECRET_KEY
   if (!secretKey) {

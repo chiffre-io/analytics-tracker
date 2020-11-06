@@ -26,20 +26,38 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install
         name: Install dependencies
-      - run: yarn build
-        name: Build bundle
-        env:
-          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
 
       # Continuous Delivery Pipeline --
 
+      - id: short-sha1
+        name: Get short Git SHA-1
+        run: echo "::set-output name=value::$(echo $GITHUB_SHA | cut -c1-8)"
+
+      # Build for NPM
+      - run: yarn build:npm
+        name: Build NPM package
+      - run: echo ${{ steps.short-sha1.outputs.value }} > ./lib/git-sha1.txt
+        name: Write Git SHA1 to file (for postinstall script)
+      - uses: codfish/semantic-release-action@e062b24edc9c1a2c4bb8b1f5cc914f3387c00458
+        name: Semantic Release
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Build bundle to deploy
+      - run: yarn build:bundle
+        name: Build production bundle
+        env:
+          SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
       - uses: dswistowski/surge-sh-action@341bcbd76a97da5e6b55ad92f53c0bf840e04c80
         name: Deploy to Surge
         with:
-          domain: https://embed.chiffre.io
+          domain: ${{ secrets.DEPLOYMENT_URL }}
           project: ./dist
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
+
       - uses: 8398a7/action-slack@44a35a96508f31f916f99ad5b68f489ae45659a2
         name: Notify on Slack
         if: always() # Pick up events even if the job fails or is canceled.

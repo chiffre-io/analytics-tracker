@@ -11,3 +11,4 @@ lib/main.*
 .dependabot/
 scripts/
 coverage/
+public/
