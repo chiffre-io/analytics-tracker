@@ -1,0 +1,15 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rollback:
+    name: Rollback
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@c3f5d00c8784369c43779f3d2611769594a61f7a
+        with:
+          name: analytics-bundle-dev.js
+          path: analytics.js
+      - run: cat analytics.js
