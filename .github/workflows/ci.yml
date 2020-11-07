@@ -35,10 +35,12 @@ jobs:
         name: Run integration tests
         env:
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
-      # - uses: coverallsapp/github-action@8cbef1dea373ebce56de0a14c68d6267baa10b44
-      #   name: Report code coverage
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
+        with:
+          name: analytics-bundle-dev.js
+          path: ./dist/analytics.js
+
       - uses: 8398a7/action-slack@44a35a96508f31f916f99ad5b68f489ae45659a2
         name: Notify on Slack
         if: always() # Pick up events even if the job fails or is canceled.
