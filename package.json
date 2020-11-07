@@ -27,6 +27,7 @@
     "build:clean": "rm -rf ./dist ./lib ./coverage",
     "build:version": "ts-node ./scripts/generateVersion.ts",
     "build:ts": "tsc",
+    "build:sha1": "git rev-parse HEAD > ./lib/.gitref",
     "build:esbuild": "ts-node ./scripts/build.ts",
     "build:public": "cp -rf ./public/ ./dist/",
     "build:sign": "ts-node ./scripts/sign.ts",

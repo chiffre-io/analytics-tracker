@@ -30,14 +30,10 @@ jobs:
 
       # Continuous Delivery Pipeline --
 
-      - id: short-sha1
-        name: Get short Git SHA-1
-        run: echo "::set-output name=value::$(echo $GITHUB_SHA | cut -c1-8)"
-
       # Build for NPM
       - run: yarn build:npm
         name: Build NPM package
-      - run: echo ${{ steps.short-sha1.outputs.value }} > ./lib/git-sha1.txt
+      - run: yarn build:sha1
         name: Write Git SHA1 to file (for postinstall script)
       - uses: codfish/semantic-release-action@e062b24edc9c1a2c4bb8b1f5cc914f3387c00458
         name: Semantic Release
