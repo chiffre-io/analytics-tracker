@@ -38,18 +38,15 @@ jobs:
         env:
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
           SIGNATURE_PUBLIC_KEYS: ${{ secrets.SIGNATURE_PUBLIC_KEYS }}
-
       - uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
         with:
           name: analytics-bundle-dev.js
           path: ./dist/analytics.js
-
-      - uses: JamesIves/github-pages-deploy-action@132898c54c57c7cc6b80eb3a89968de8fc283505
-        name: Deploy to GitHub Pages
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: ./dist
+      - run: yarn deploy
+        name: Deploy to Surge
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
       - uses: 8398a7/action-slack@44a35a96508f31f916f99ad5b68f489ae45659a2
         name: Notify on Slack
