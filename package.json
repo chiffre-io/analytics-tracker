@@ -65,7 +65,8 @@
   },
   "browser": {
     "crypto": false,
-    "buffer": false
+    "buffer": false,
+    "nanoid": "./node_modules/nanoid/index.browser.js"
   },
   "prettier": {
     "arrowParens": "avoid",

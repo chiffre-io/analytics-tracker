@@ -7,7 +7,6 @@ const options: BuildOptions = {
   bundle: true,
   minify: true,
   format: 'iife',
-  external: ['crypto'],
   logLevel: 'info',
   metafile: path.resolve(__dirname, '../dist/build.json'),
   define: {
