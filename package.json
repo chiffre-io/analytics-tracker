@@ -30,13 +30,16 @@
     "build:sha1": "git rev-parse HEAD > ./lib/.gitref",
     "build:esbuild": "ts-node ./scripts/build.ts",
     "build:public": "cp -rf ./public/ ./dist/",
+    "build:pull": "mkdir -p ./dist && curl -s $DEPLOYMENT_URL/analytics.js > ./dist/analytics.js",
+    "build:archive": "ts-node ./scripts/archive.ts",
+    "build:manifest": "ls -1 ./dist/*.js | cut -c8- > ./dist/manifest.txt ",
     "build:sign": "ts-node ./scripts/sign.ts",
     "build:size": "echo $(cat ./dist/analytics.js | wc -c) bytes unzipped && echo $(cat ./dist/analytics.js | gzip -kc7 | wc -c) bytes gzipped",
     "build:analyze": "ts-node ./scripts/analyze.ts",
-    "build:npm": "run-s build:clean build:ts",
-    "build:bundle": "run-s build:version build:esbuild build:analyze build:sign build:public build:size",
+    "build:npm": "run-s build:ts",
+    "build:bundle": "run-s build:version build:esbuild build:analyze build:sign build:public build:size build:archive",
     "postinstall": "node ./scripts/postinstall.js",
-    "ci": "run-s build:npm postinstall build:bundle"
+    "ci": "run-s build:clean build:pull build:archive build:npm postinstall build:bundle build:manifest"
   },
   "dependencies": {
     "@chiffre/analytics-core": "^2.1.0",

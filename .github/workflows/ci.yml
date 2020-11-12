@@ -13,6 +13,8 @@ jobs:
   ci:
     name: Continuous Integration
     runs-on: ubuntu-latest
+    env:
+      DEPLOYMENT_URL: https://staging-embed.chiffre.io
     steps:
       - id: yarn-cache
         name: Get Yarn cache path
@@ -35,11 +37,20 @@ jobs:
         name: Run integration tests
         env:
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
+          SIGNATURE_PUBLIC_KEYS: ${{ secrets.SIGNATURE_PUBLIC_KEYS }}
 
       - uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
         with:
           name: analytics-bundle-dev.js
           path: ./dist/analytics.js
+
+      - uses: dswistowski/surge-sh-action@341bcbd76a97da5e6b55ad92f53c0bf840e04c80
+        name: Deploy to Surge
+        with:
+          domain: ${{ env.DEPLOYMENT_URL }}
+          project: ./dist
+          login: ${{ secrets.SURGE_LOGIN }}
+          token: ${{ secrets.SURGE_TOKEN }}
 
       - uses: 8398a7/action-slack@44a35a96508f31f916f99ad5b68f489ae45659a2
         name: Notify on Slack
