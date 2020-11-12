@@ -44,13 +44,12 @@ jobs:
           name: analytics-bundle-dev.js
           path: ./dist/analytics.js
 
-      - uses: dswistowski/surge-sh-action@341bcbd76a97da5e6b55ad92f53c0bf840e04c80
-        name: Deploy to Surge
+      - uses: JamesIves/github-pages-deploy-action@132898c54c57c7cc6b80eb3a89968de8fc283505
+        name: Deploy to GitHub Pages
         with:
-          domain: ${{ env.DEPLOYMENT_URL }}
-          project: ./dist
-          login: ${{ secrets.SURGE_LOGIN }}
-          token: ${{ secrets.SURGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: ./dist
 
       - uses: 8398a7/action-slack@44a35a96508f31f916f99ad5b68f489ae45659a2
         name: Notify on Slack
