@@ -15,6 +15,9 @@ function readSha1(libDir) {
 
 readPkg().then(pkg => {
   const libDir = path.resolve(__dirname, '../lib')
+  if (!fs.existsSync(libDir)) {
+    return
+  }
   const gitSha1 = readSha1(libDir)
   const version = pkg.version + (gitSha1 ? '-' + gitSha1.slice(0, 8) : '')
   const ts = `export declare const version = "${version}";`
