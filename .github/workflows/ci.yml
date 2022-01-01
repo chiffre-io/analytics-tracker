@@ -38,7 +38,7 @@ jobs:
         env:
           SIGNATURE_SECRET_KEY: ${{ secrets.SIGNATURE_SECRET_KEY }}
           SIGNATURE_PUBLIC_KEYS: ${{ secrets.SIGNATURE_PUBLIC_KEYS }}
-      - uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
+      - uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2
         with:
           name: analytics-bundle-dev.js
           path: ./dist/analytics.js
